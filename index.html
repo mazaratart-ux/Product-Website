@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PolarFlow Bottles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="background-grid"></div>
+  <header class="topbar">
+    <div class="brand">PolarFlow<small>™</small></div>
+    <nav class="nav" aria-label="Ana menü">
+      <button class="nav__item active" data-target="home">Ana sayfa</button>
+      <button class="nav__item" data-target="categories">Kategoriler</button>
+      <button class="nav__item" data-target="discover">Keşfet</button>
+      <button class="nav__item" data-target="faq">Sıkça Sorulan Sorular</button>
+      <button class="nav__item" data-target="contact">İletişim</button>
+    </nav>
+    <button id="themeToggle" class="toggle" aria-label="Tema değiştir">☾</button>
+  </header>
+
+  <main>
+    <section id="home" class="panel active" aria-labelledby="Ana sayfa">
+      <div class="hero">
+        <div class="hero__text">
+          <h1>Premium su deneyiminizi kişiselleştirin</h1>
+          <p>PolarFlow, performans ve estetiği birleştiren özelleştirilebilir akıllı mataralarıyla su içme alışkanlığınızı yeniden tanımlar.</p>
+          <div class="hero__cta">
+            <button class="btn primary" id="startDesign">Tasarımınızı Başlatın</button>
+            <button class="btn ghost" data-target="discover">Teknolojiyi keşfedin</button>
+          </div>
+          <div class="hero__stats">
+            <div>
+              <strong>24s</strong>
+              <span>Isı izolasyon garantisi</span>
+            </div>
+            <div>
+              <strong>64+</strong>
+              <span>Kişisel gravür seçeneği</span>
+            </div>
+            <div>
+              <strong>96%</strong>
+              <span>Müşteri memnuniyeti</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <canvas id="bottleCanvas" aria-hidden="true"></canvas>
+          <div class="hero__orbit">
+            <span>AI Hidratasyon Takibi</span>
+            <span>360° Kaplama</span>
+            <span>LED Hidro Halkası</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="categories" class="panel" aria-labelledby="Kategoriler">
+      <h2>Her yaşam tarzı için rafine koleksiyonlar</h2>
+      <p class="section-intro">Premium materyaller, kişisel imza seçenekleri ve sürdürülebilir paketleme ile üç farklı koleksiyon.</p>
+      <div class="category-grid">
+        <article class="card" data-collection="Aurora">
+          <img src="https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=900&q=80" alt="Aurora koleksiyonundan matara" loading="lazy" />
+          <div class="card__content">
+            <h3>Aurora Serisi</h3>
+            <p>Fütüristik anodize yüzeyler, programlanabilir LED halka ve manyetik kapak.</p>
+            <button class="btn ghost">Özelleştir</button>
+          </div>
+        </article>
+        <article class="card" data-collection="Monolith">
+          <img src="https://images.unsplash.com/photo-1526401485004-46910ecc8e51?auto=format&fit=crop&w=900&q=80" alt="Monolith koleksiyonundan matara" loading="lazy" />
+          <div class="card__content">
+            <h3>Monolith Serisi</h3>
+            <p>Titan alaşım gövde, anti-şok yapısı ve çift sensörlü hidrasyon asistanı.</p>
+            <button class="btn ghost">Özelleştir</button>
+          </div>
+        </article>
+        <article class="card" data-collection="Lumen">
+          <img src="https://images.unsplash.com/photo-1526401281623-990a326c7a67?auto=format&fit=crop&w=900&q=80" alt="Lumen koleksiyonundan matara" loading="lazy" />
+          <div class="card__content">
+            <h3>Lumen Serisi</h3>
+            <p>İpek mat dokulu cam kaplama, UV-C sterilizasyon ve kişisel mesaj paneli.</p>
+            <button class="btn ghost">Özelleştir</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="discover" class="panel" aria-labelledby="Keşfet">
+      <div class="discover-header">
+        <h2>İnovasyonla yoğrulmuş kullanıcı deneyimi</h2>
+        <p>PolarFlow App ile mataralarınızı eşleştirin, hidrasyon hedefleri belirleyin ve yolculuğunuzu gerçek zamanlı izleyin.</p>
+      </div>
+      <div class="discover-grid">
+        <div class="discover-card glass" id="configurator">
+          <h3>Anında özelleştirme</h3>
+          <p>Renkleri, yüzeyleri ve kapak stilini seçerek şişenizi canlı önizlemede görün.</p>
+          <form class="config-form" aria-label="Matara özelleştirici">
+            <label>Renk
+              <input type="color" id="colorPicker" value="#38bdf8">
+            </label>
+            <label>Yüzey Dokusu
+              <select id="textureSelect">
+                <option value="mat">Saten Mat</option>
+                <option value="parlak">Aurora Parlak</option>
+                <option value="dokulu">Volkanik Dokulu</option>
+              </select>
+            </label>
+            <label>Kapak Tipi
+              <div class="toggle-group" role="radiogroup" aria-label="Kapak tipi">
+                <input type="radio" name="cap" id="capFlip" value="flip" checked>
+                <label for="capFlip">Flip-top</label>
+                <input type="radio" name="cap" id="capTwist" value="twist">
+                <label for="capTwist">Twist-lock</label>
+              </div>
+            </label>
+          </form>
+          <div class="preview" role="img" aria-label="Canlı matara önizlemesi">
+            <div class="preview__bottle">
+              <div class="preview__cap"></div>
+              <div class="preview__body"></div>
+              <div class="preview__halo"></div>
+            </div>
+            <div class="preview__info">
+              <strong class="preview__name">Aurora Sky</strong>
+              <span class="preview__desc">Saten Mat • Flip-top</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="discover-card timeline">
+          <h3>Saflık döngüsü</h3>
+          <ol>
+            <li>
+              <span class="time">0s</span>
+              <p>Akıllı kapak, hidrasyon hedefinizi ışık halkasıyla bildirir.</p>
+            </li>
+            <li>
+              <span class="time">30dk</span>
+              <p>UV-C sterilizasyon modu otomatik devreye girer.</p>
+            </li>
+            <li>
+              <span class="time">6s</span>
+              <p>Termal çekirdek mikro sıcaklık ayarlamaları yapar.</p>
+            </li>
+            <li>
+              <span class="time">24s</span>
+              <p>Çift katmanlı vakum izolasyonu soğukluğu korur.</p>
+            </li>
+          </ol>
+        </div>
+
+        <div class="discover-card insights">
+          <h3>Veriye dayalı içgörüler</h3>
+          <div class="chart">
+            <div class="chart__bar" data-value="82">
+              <span>Performans</span>
+            </div>
+            <div class="chart__bar" data-value="68">
+              <span>Sağlık</span>
+            </div>
+            <div class="chart__bar" data-value="92">
+              <span>Stil</span>
+            </div>
+            <div class="chart__bar" data-value="74">
+              <span>Dayanıklılık</span>
+            </div>
+          </div>
+          <p class="chart-summary">Kullanıcı davranışlarına göre özelleştirilmiş raporlar ve öneriler alın.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="panel" aria-labelledby="Sıkça Sorulan Sorular">
+      <h2>Sıkça sorulan sorular</h2>
+      <div class="accordion" role="tablist">
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false">Matara izolasyon garantiniz nasıl çalışıyor?</button>
+          <div class="accordion__content" hidden>
+            <p>PolarFlow izolasyon çekirdeği, sıcak veya soğuk içecekleri 24 saate kadar sabit tutar. Performans düşerse ücretsiz çekirdek değişimi sağlıyoruz.</p>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false">Özelleştirme seçeneklerim neler?</button>
+          <div class="accordion__content" hidden>
+            <p>Renk paleti, yüzey dokusu, kapak tipi ve lazer gravür seçenekleri arasından seçim yapabilir, akıllı sensör halkasının ışık tonlarını ayarlayabilirsiniz.</p>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false">Sipariş teslim süresi ne kadar?</button>
+          <div class="accordion__content" hidden>
+            <p>Türkiye içi siparişler 48 saat içinde hazırlanır ve 3 iş günü içinde teslim edilir. Kişisel gravürlü ürünlerde bu süre 1 gün uzayabilir.</p>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false">Uygulama entegrasyonu nasıl gerçekleşiyor?</button>
+          <div class="accordion__content" hidden>
+            <p>Bluetooth LE ile bağlanarak hidrasyon hedefleri, içim takibi ve canlı bildirimleri PolarFlow mobil uygulamasından yönetebilirsiniz.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="panel" aria-labelledby="İletişim">
+      <h2>İletişime geçelim</h2>
+      <div class="contact-grid">
+        <form class="contact-form" novalidate>
+          <label>Ad Soyad
+            <input type="text" name="name" placeholder="Adınızı girin" required>
+          </label>
+          <label>E-posta
+            <input type="email" name="email" placeholder="ornek@polarflow.com" required>
+          </label>
+          <label>Mesajınız
+            <textarea name="message" rows="4" placeholder="Merhaba PolarFlow ekibi..." required></textarea>
+          </label>
+          <div class="contact-actions">
+            <button type="submit" class="btn primary">Gönder</button>
+            <span class="form-status" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+        <div class="contact-info glass">
+          <h3>Global merkezler</h3>
+          <ul>
+            <li><strong>İstanbul</strong> — Sürdürülebilir üretim & tasarım laboratuvarı</li>
+            <li><strong>Berlin</strong> — Sensor inovasyon stüdyosu</li>
+            <li><strong>San Francisco</strong> — Veri bilimi ve müşteri deneyimi merkezi</li>
+          </ul>
+          <div class="contact-meta">
+            <span class="live-badge">7/24 canlı destek</span>
+            <button class="btn ghost" id="bookDemo">Demo planla</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2024 PolarFlow Labs — Akışkan hidratasyon teknolojileri.</p>
+    <div class="socials">
+      <a href="#" aria-label="Instagram">Instagram</a>
+      <a href="#" aria-label="LinkedIn">LinkedIn</a>
+      <a href="#" aria-label="YouTube">YouTube</a>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
